@@ -1,1 +1,1 @@
-# MavenAcademy
+# MateAcademy
