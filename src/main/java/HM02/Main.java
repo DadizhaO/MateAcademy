@@ -14,6 +14,9 @@ public class Main {
 
         Pizza2 pizza2 = new Pizza2.Builder2().withCheese(cheese).withTopping(topping).build();
         System.out.println(pizza2);
+
+        Pizza3 pizza3 = new Pizza3.Pizza3Builder().setCheese(cheese).setMeet(meet).createPizza3();
+        System.out.println(pizza3);
     }
 
 
