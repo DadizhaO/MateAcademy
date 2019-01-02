@@ -1,12 +1,10 @@
 package HM04;
 
-public class Securities implements BasicInterface {
+public class Securities extends BasicAbstClass implements BasicInterface {
 
 
-    private int quantity;
-
-    Securities(int quantity) {
-        this.quantity = quantity;
+    public Securities(int quantity) {
+        super(quantity);
     }
 
     @Override
@@ -14,8 +12,5 @@ public class Securities implements BasicInterface {
         System.out.println("Balance of sucurities " + getQuantity());
     }
 
-    public int getQuantity() {
-        return quantity;
-    }
 
 }
