@@ -1,15 +1,10 @@
 package HM04;
 
-public class Currency implements BasicInterface {
+public class Currency extends BasicAbstClass implements BasicInterface {
 
-    private int quantity;
 
-     Currency(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public int getQuantity() {
-        return quantity;
+    public Currency(int quantity) {
+        super(quantity);
     }
 
     @Override
