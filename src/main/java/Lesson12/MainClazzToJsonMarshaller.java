@@ -33,8 +33,3 @@ public class MainClazzToJsonMarshaller {
         }
     }
 }
-/*   StringWriter sw = new StringWriter();
-            jaxbMarshaller.marshal(object, sw);
-            System.out.println(sw.toString());*/
-/*    jaxbMarshaller.setProperty(MarshallerProperties.MEDIA_TYPE, "application/json");
-            jaxbMarshaller.setProperty(MarshallerProperties.JSON_INCLUDE_ROOT, false);*/
