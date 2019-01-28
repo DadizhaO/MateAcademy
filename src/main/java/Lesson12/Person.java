@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 
 @XmlTransient
-@XmlSeeAlso({Student.class, Teacher.class, HumanResource.class})
+@XmlSeeAlso({Student.class, Teacher.class, HumanResource.class, Assistant.class})
 @JsonInclude(value = Include.NON_EMPTY)
 public class Person implements Serializable {
     private String name;
