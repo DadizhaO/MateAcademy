@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.Set;
 
 @XmlRootElement(name = "MateGroup")
-@XmlAccessorType(XmlAccessType.FIELD)
-@JsonPropertyOrder({"room", "teacher", "students", "humanResources"})
+//@XmlAccessorType(XmlAccessType.FIELD)
+//@XmlType(propOrder = {"teacher", "assistant", "students", "room", "humanResources", "id"})
 public class MateGroup implements Serializable {
 
     @XmlElement(type = Teacher.class)
@@ -24,6 +24,7 @@ public class MateGroup implements Serializable {
     @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = As.PROPERTY, property = "type")
     @JsonSubTypes({@JsonSubTypes.Type(value = Teacher.class, name = "teacher"),
             @JsonSubTypes.Type(value = Student.class, name = "student")})
+
     private List<Person> students;
     @XmlElement(required = true, nillable = false)
     private Room room;
@@ -32,8 +33,12 @@ public class MateGroup implements Serializable {
     private Set<HumanResource> humanResources;
     private int id;
 
-    public MateGroup(Teacher teacher, List<Person> students, Room room, Set<HumanResource> humanResources) {
+    @XmlElement
+    private Person assistant;
+
+    public MateGroup(Teacher teacher, Assistant assistant, List<Person> students, Room room, Set<HumanResource> humanResources) {
         this.teacher = teacher;
+        this.assistant = assistant;
         this.students = students;
         this.room = room;
         this.humanResources = humanResources;
@@ -46,7 +51,7 @@ public class MateGroup implements Serializable {
         return teacher;
     }
 
-    @XmlElement
+
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
     }
@@ -75,10 +80,20 @@ public class MateGroup implements Serializable {
         this.humanResources = humanResources;
     }
 
+    public void setAssistant(Assistant assistant) {
+        this.assistant = assistant;
+    }
+
     @Override
     public String toString() {
-        return "MateGroup [teacher=" + teacher + ", students=" + students + ", room=" + room + ", humanResources="
-                + humanResources + "]";
+        return "MateGroup{" +
+                "teacher=" + teacher +
+                ", students=" + students +
+                ", room=" + room +
+                ", humanResources=" + humanResources +
+                ", id=" + id +
+                ", assistant=" + assistant +
+                '}';
     }
 
     public int getId() {
@@ -95,6 +110,9 @@ public class MateGroup implements Serializable {
 
         Teacher teacher = new Teacher("Serhii", "Pasko", 1988, 666);
         mateGroup.setTeacher(teacher);
+
+        Assistant assistant = new Assistant("Fidel", "Kastro", 1999, "0007");
+        mateGroup.setAssistant(assistant);
 
         Room room = new Room("Kiyv", "Tarasivska", 16, 28);
         mateGroup.setRoom(room);
