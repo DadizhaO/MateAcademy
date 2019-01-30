@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 @XmlRootElement(name = "MateGroup")
-//@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.FIELD)
 //@XmlType(propOrder = {"teacher", "assistant", "students", "room", "humanResources", "id"})
 public class MateGroup implements Serializable {
 
