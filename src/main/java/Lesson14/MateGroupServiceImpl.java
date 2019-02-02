@@ -56,7 +56,7 @@ public class MateGroupServiceImpl implements MateGroupService {
             students.removeIf(f -> f.getSurname().equals(surname));
             return Response.status(Status.ACCEPTED).entity(mateGroup).type(MediaType.APPLICATION_JSON).build();
         }
-        return Response.status(404).build();
+        return Response.status(Status.NOT_FOUND).build();
     }
 
     @PUT
@@ -69,20 +69,18 @@ public class MateGroupServiceImpl implements MateGroupService {
             mateGroup.getStudents().stream().filter(s -> s.getSurname().equals(surname)).forEach(s -> s.setName(name));
             return Response.status(Status.ACCEPTED).entity(mateGroup).type(MediaType.APPLICATION_JSON).build();
         }
-        return Response.status(404).build();
+        return Response.status(Status.NOT_FOUND).build();
     }
 
-    @PUT
+    @POST
     @Path("/humanResources")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
     public Response addHumanResources(@PathParam("groupId") int groupId, HumanResource humanResource) {
         MateGroup mateGroup = mateGroups.get(groupId);
         if (mateGroup != null) {
             mateGroup.getHumanResources().add(humanResource);
-            return Response.status(Status.ACCEPTED).entity(mateGroup).type(MediaType.APPLICATION_JSON).build();
+            return Response.status(Status.ACCEPTED).entity(mateGroup).build();
         }
-        return Response.status(404).build();
+        return Response.status(Status.NOT_FOUND).build();
     }
 
 
@@ -95,7 +93,7 @@ public class MateGroupServiceImpl implements MateGroupService {
             mateGroup.getHumanResources().removeIf(f -> f.getSurname().equals(surname));
             return Response.status(Status.ACCEPTED).entity(mateGroup).type(MediaType.APPLICATION_JSON).build();
         }
-        return Response.status(404).build();
+        return Response.status(Status.NOT_FOUND).build();
     }
 
     @PUT
@@ -108,7 +106,7 @@ public class MateGroupServiceImpl implements MateGroupService {
                     forEach(humanResource -> humanResource.setStartWorkYear(startWorkYear));
             return Response.status(Status.ACCEPTED).entity(mateGroup.getHumanResources()).type(MediaType.APPLICATION_JSON).build();
         }
-        return Response.status(404).build();
+        return Response.status(Status.NOT_FOUND).build();
     }
 
     @GET
@@ -119,7 +117,7 @@ public class MateGroupServiceImpl implements MateGroupService {
             Set<HumanResource> result = mateGroups.get(groupId).getHumanResources();
             return Response.status(Status.OK).entity(result).type(MediaType.APPLICATION_JSON).build();
         }
-        return Response.status(404).build();
+        return Response.status(Status.NOT_FOUND).build();
     }
 
 
@@ -133,7 +131,7 @@ public class MateGroupServiceImpl implements MateGroupService {
                     equals(surname)).collect(Collectors.toSet());
             return Response.status(Status.OK).entity(humanResource).type(MediaType.APPLICATION_JSON).build();
         }
-        return Response.status(404).build();
+        return Response.status(Status.NOT_FOUND).build();
     }
 
 }
