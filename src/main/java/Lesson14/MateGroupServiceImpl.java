@@ -1,5 +1,6 @@
 package Lesson14;
 
+import Lesson12.HumanResource;
 import Lesson12.MateGroup;
 import Lesson12.Person;
 
@@ -10,6 +11,7 @@ import javax.ws.rs.core.Response.Status;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -54,7 +56,7 @@ public class MateGroupServiceImpl implements MateGroupService {
             students.removeIf(f -> f.getSurname().equals(surname));
             return Response.status(Status.ACCEPTED).entity(mateGroup).type(MediaType.APPLICATION_JSON).build();
         }
-        return Response.status(404).build();
+        return Response.status(Status.NOT_FOUND).build();
     }
 
     @PUT
@@ -63,10 +65,73 @@ public class MateGroupServiceImpl implements MateGroupService {
 
         MateGroup mateGroup = mateGroups.get(groupId);
         if (mateGroup != null) {
-            
+
             mateGroup.getStudents().stream().filter(s -> s.getSurname().equals(surname)).forEach(s -> s.setName(name));
             return Response.status(Status.ACCEPTED).entity(mateGroup).type(MediaType.APPLICATION_JSON).build();
         }
-        return Response.status(404).build();
+        return Response.status(Status.NOT_FOUND).build();
     }
+
+    @POST
+    @Path("/humanResources")
+    public Response addHumanResources(@PathParam("groupId") int groupId, HumanResource humanResource) {
+        MateGroup mateGroup = mateGroups.get(groupId);
+        if (mateGroup != null) {
+            mateGroup.getHumanResources().add(humanResource);
+            return Response.status(Status.ACCEPTED).entity(mateGroup).build();
+        }
+        return Response.status(Status.NOT_FOUND).build();
+    }
+
+
+    @DELETE
+    @Path("/humanResources/{surname}")
+    public Response removeHumanResources(@PathParam("groupId") int groupId, @PathParam("surname") String surname) {
+        MateGroup mateGroup = mateGroups.get(groupId);
+        if (mateGroup != null) {
+
+            mateGroup.getHumanResources().removeIf(f -> f.getSurname().equals(surname));
+            return Response.status(Status.ACCEPTED).entity(mateGroup).type(MediaType.APPLICATION_JSON).build();
+        }
+        return Response.status(Status.NOT_FOUND).build();
+    }
+
+    @PUT
+    @Path("/humanResource/{surname}")
+    public Response updateHRyear(@PathParam("groupId") int groupId, @PathParam("surname") String surname,
+                                 @QueryParam("startWorkYear") int startWorkYear) {
+        MateGroup mateGroup = mateGroups.get(groupId);
+        if (mateGroup != null) {
+            mateGroup.getHumanResources().stream().filter(h -> h.getSurname().equals(surname)).
+                    forEach(humanResource -> humanResource.setStartWorkYear(startWorkYear));
+            return Response.status(Status.ACCEPTED).entity(mateGroup.getHumanResources()).type(MediaType.APPLICATION_JSON).build();
+        }
+        return Response.status(Status.NOT_FOUND).build();
+    }
+
+    @GET
+    @Path("/humanResource")
+    public Response getAllHumanResource(@PathParam("groupId") int groupId) {
+        MateGroup mateGroup = mateGroups.get(groupId);
+        if (mateGroup != null) {
+            Set<HumanResource> result = mateGroups.get(groupId).getHumanResources();
+            return Response.status(Status.OK).entity(result).type(MediaType.APPLICATION_JSON).build();
+        }
+        return Response.status(Status.NOT_FOUND).build();
+    }
+
+
+    @GET
+    @Path("/humanResource/{surname}")
+    public Response getOneHR(@PathParam("groupId") int groupId, @PathParam("surname") String surname) {
+        MateGroup mateGroup = mateGroups.get(groupId);
+        if (mateGroup != null) {
+
+            Set<HumanResource> humanResource = mateGroups.get(groupId).getHumanResources().stream().filter(humanResource1 -> humanResource1.getSurname().
+                    equals(surname)).collect(Collectors.toSet());
+            return Response.status(Status.OK).entity(humanResource).type(MediaType.APPLICATION_JSON).build();
+        }
+        return Response.status(Status.NOT_FOUND).build();
+    }
+
 }
