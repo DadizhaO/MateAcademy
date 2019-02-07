@@ -1,3 +1,9 @@
+--вивести інформацію про клієнтів без повторів, що купили продукти що містять в назві букву "а"
+SELECT * FROM customers cus 
+INNER JOIN orders ord on cus.cust_num = ord.cust
+INNER JOIN products p on p.product_id = ord.product
+where p.description like '%а%';
+
 SELECT
     order_num,
     amount,
