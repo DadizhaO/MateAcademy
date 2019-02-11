@@ -437,7 +437,7 @@ SELECT
 FROM
     products p
 WHERE
-    REGEXP_LIKE ( p.description,'[AaAa]{2,}' );
+    REGEXP_LIKE ( p.description,'а{2,}' );
 
 select* from products where description like '%а%а%';
                   
