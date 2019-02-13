@@ -1,4 +1,4 @@
-package Lesson11;
+package HM12;
 
 public class StringLowerUpperService {
     public String toUpper(String input) {

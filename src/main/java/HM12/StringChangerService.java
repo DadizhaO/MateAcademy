@@ -1,4 +1,4 @@
-package Lesson11;
+package HM12;
 
 public class StringChangerService {
     private StringLowerUpperService lowerUpperService;
