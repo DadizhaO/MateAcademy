@@ -8,6 +8,8 @@ public interface OrderDao {
 
     Set<Order> getAllOrders() throws SQLException;
 
+    Set<Order> getAllOrdersInnerJoin() throws SQLException;
+
     Order findOrderById(BigDecimal id) throws SQLException;
 
     boolean insertOrder(Order order) throws SQLException;
