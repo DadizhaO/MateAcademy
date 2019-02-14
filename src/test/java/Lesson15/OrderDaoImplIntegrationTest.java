@@ -14,7 +14,6 @@ public class OrderDaoImplIntegrationTest {
 
 
     private OrderDao orderDao = new OrderDaoImpl();
-    private OfficeDao officeDao = new OfficeDaoImpl();
 
     @Test
     public void testFindOrderById() throws SQLException {
@@ -40,19 +39,4 @@ public class OrderDaoImplIntegrationTest {
         assertEquals(orderDao.getAllOrders().size(), orders.size());
     }
 
-
-    @Test
-    public void testGetAllOffices() throws SQLException {
-        Set<Office> offices = officeDao.getAllOffices();
-        System.out.println(offices);
-        assertEquals(offices.size(), 5);
-    }
-
-    @Test
-    public void testGetByRegion() throws SQLException {
-        Set<Office> offices = officeDao.getByRegion("Восток");
-        System.out.println(offices);
-        System.out.println(offices.size());
-        assertEquals(offices.size(), 3);
-    }
 }
