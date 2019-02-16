@@ -1,11 +1,13 @@
 package Lesson15;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
+
 
 public class OfficeDaoImpl implements OfficeDao {
 
@@ -42,5 +44,55 @@ public class OfficeDaoImpl implements OfficeDao {
         prepareStatement.close();
         connection.close();
         return offices;
+    }
+
+    @Override
+    public boolean insertOffice(Office office) throws SQLException {
+        Connection connection = ConnectToDB.getConnection();
+        String sql = "insert into offices(office,city,region,sales) values (?,?,?,?)";
+        PreparedStatement state = connection.prepareStatement(sql);
+        state.setBigDecimal(1, office.getOfficeId());
+        state.setString(2, office.getCity());
+        state.setString(3, office.getRegion());
+        state.setBigDecimal(4, office.getSales());
+
+        boolean update = state.executeUpdate() > 0;
+
+        state.close();
+        connection.close();
+        return update;
+
+    }
+
+    @Override
+    public boolean updateOffice(Office office) throws SQLException {
+        Connection connection = ConnectToDB.getConnection();
+        String sql = "UPDATE offices SET city=?,region=?, target=?, sales=?  WHERE office=?";
+        PreparedStatement state = connection.prepareStatement(sql);
+        state.setString(1, office.getCity());
+        state.setString(2, office.getRegion());
+        state.setBigDecimal(3, office.getTarget());
+        state.setBigDecimal(4, office.getSales());
+        state.setBigDecimal(5, office.getOfficeId());
+
+        boolean update = state.executeUpdate() > 0;
+
+        state.close();
+        connection.close();
+        return update;
+
+    }
+
+    @Override
+    public boolean deleteOffice(BigDecimal officeId) throws SQLException {
+        Connection connection = ConnectToDB.getConnection();
+        String sql = "delete offices where office=?";
+        PreparedStatement state = connection.prepareStatement(sql);
+        state.setBigDecimal(1, officeId);
+        boolean update = state.executeUpdate() > 0;
+
+        state.close();
+        connection.close();
+        return update;
     }
 }
