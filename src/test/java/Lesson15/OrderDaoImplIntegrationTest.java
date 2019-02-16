@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
@@ -14,6 +15,8 @@ public class OrderDaoImplIntegrationTest {
 
 
     private OrderDao orderDao = new OrderDaoImpl();
+    static Order order = new Order
+            (new BigDecimal(1234), null, LocalDate.of(1999, 12, 13), "mfr", new BigDecimal(12), new BigDecimal(123.12));
 
     @Test
     public void testFindOrderById() throws SQLException {
@@ -37,6 +40,22 @@ public class OrderDaoImplIntegrationTest {
         System.out.println(orders);
         System.out.println(orders.size());
         assertEquals(orderDao.getAllOrders().size(), orders.size());
+    }
+
+    @Test
+    public void testInsertOrder() throws SQLException {
+        assertTrue(orderDao.insertOrder(order));
+    }
+
+    @Test
+    public void testUpdateOrder() throws SQLException {
+        assertTrue(orderDao.updateOrder(order));
+    }
+
+    @Test
+    public void testDeleteOrder() throws SQLException {
+        assertTrue(orderDao.deleteOrder(new BigDecimal(1234)));
+
     }
 
 }
