@@ -96,7 +96,7 @@ public class OfficeDaoImpl implements OfficeDao {
     }
 
     @Override
-    public boolean deleteOffice(BigDecimal officeId) throws SQLException {
+    public boolean deleteOffice(Office office) throws SQLException {
         Connection connection = null;
         PreparedStatement state = null;
         boolean update = false;
@@ -104,7 +104,7 @@ public class OfficeDaoImpl implements OfficeDao {
             connection = ConnectToDB.getConnection();
             String sql = "delete offices where office=?";
             state = connection.prepareStatement(sql);
-            state.setBigDecimal(1, officeId);
+            state.setBigDecimal(1, office.getOfficeId());
             update = state.executeUpdate() > 0;
         } finally {
             state.close();

@@ -48,7 +48,7 @@ public class OfficeDaoImplIntegrationTest {
 
     @Test
     public void test3DeleteOffice() throws SQLException {
-        assertTrue(officeDao.deleteOffice(office2.getOfficeId()));
+        assertTrue(officeDao.deleteOffice(office2));
         Set<Office> offices = officeDao.getAllOffices();
         assertFalse(offices.contains(office1));
         assertFalse(offices.contains(office2));

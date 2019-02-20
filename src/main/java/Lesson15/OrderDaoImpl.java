@@ -115,16 +115,42 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public boolean deleteOrder(BigDecimal id) throws SQLException {
-        Connection connection = ConnectToDB.getConnection();
-        String sql = "delete orders where order_num=?";
-        PreparedStatement state = connection.prepareStatement(sql);
-        state.setBigDecimal(1, id);
-        boolean update = state.executeUpdate() > 0;
+    public boolean deleteOrder(Order order) throws SQLException {
 
-        state.close();
-        connection.close();
-        return update;
+        return (new CRUDTemplate() {
+
+            @Override
+            public PreparedStatement returnPreparedStatement(Order order, Connection connection) throws SQLException {
+                PreparedStatement statement;
+                String sql = "delete orders where order_num=?";
+                statement = connection.prepareStatement(sql);
+                statement.setBigDecimal(1, order.getOrderNum());
+                return statement;
+            }
+        }).templateOperation(order);
+    }
+
+
+    private abstract class CRUDTemplate {
+        public boolean templateOperation(Order order) throws SQLException {
+            boolean update = false;
+            Connection connection = null;
+            PreparedStatement statement = null;
+
+            try {
+                connection = ConnectToDB.getConnection();
+                statement = returnPreparedStatement(order, connection);
+                update = statement.executeUpdate() > 0;
+
+            } finally {
+                statement.close();
+                connection.close();
+            }
+            return update;
+        }
+
+        public abstract PreparedStatement returnPreparedStatement(Order order, Connection connection) throws SQLException;
+
     }
 
     private void showMetadata(ResultSet rs) throws SQLException {
@@ -136,5 +162,6 @@ public class OrderDaoImpl implements OrderDao {
             System.out.println(resultSetMetaData.getSchemaName(2));
         }
     }
+
 
 }

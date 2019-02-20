@@ -54,7 +54,7 @@ public class OrderDaoImplIntegrationTest {
 
     @Test
     public void testDeleteOrder() throws SQLException {
-        assertTrue(orderDao.deleteOrder(new BigDecimal(1234)));
+        assertTrue(orderDao.deleteOrder(order));
 
     }
 
