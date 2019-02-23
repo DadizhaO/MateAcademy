@@ -119,23 +119,30 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.9.8</version>
         </dependency>
-        <!-- <dependency>
-             <groupId>org.eclipse.persistence</groupId>
-             <artifactId>org.eclipse.persistence.moxy</artifactId>
-             <version>2.7.4</version>
-         </dependency>-->
-        <!-- https://mvnrepository.com/artifact/org.eclipse.persistence/javax.persistence -->
-        <!--    <dependency>
-                <groupId>org.eclipse.persistence</groupId>
-                <artifactId>javax.persistence</artifactId>
-                <version>2.2.1</version>
-            </dependency>-->
 
-        <!-- https://mvnrepository.com/artifact/org.eclipse.persistence/eclipselink -->
         <dependency>
             <groupId>org.eclipse.persistence</groupId>
             <artifactId>eclipselink</artifactId>
             <version>2.7.4</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.eclipse.persistence</groupId>
+                    <artifactId>jakarta.persistence</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+
+        <!-- Hibernate -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.4.1.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-c3p0</artifactId>
+            <version>5.4.1.Final</version>
         </dependency>
 
         <dependency>
@@ -165,11 +172,12 @@
             <groupId>com.sun.grizzly</groupId>
             <artifactId>grizzly-servlet-webserver</artifactId>
             <version>1.9.65</version>
-        </dependency>        <dependency>
-        <groupId>com.sun.jersey</groupId>
-        <artifactId>jersey-json</artifactId>
-        <version>1.19.4</version>
-    </dependency>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-json</artifactId>
+            <version>1.19.4</version>
+        </dependency>
 
         <dependency>
             <groupId>org.oracle</groupId>
@@ -179,8 +187,5 @@
             <systemPath>${project.basedir}/ojdbc8.jar</systemPath>
         </dependency>
     </dependencies>
-
-
-
 
 </project>
