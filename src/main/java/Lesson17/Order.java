@@ -1,9 +1,12 @@
 package Lesson17;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "ORDERS", schema = "MA_STUDENT")
@@ -14,9 +17,8 @@ public class Order implements Serializable {
     private BigDecimal orderNum;
     @Column
     private String product;
-    @Temporal(TemporalType.DATE)
     @Column(name = "order_date")
-    private Date orderDate;
+    private LocalDate orderDate;
     @Column
     private String mfr;
     @Column
@@ -33,7 +35,7 @@ public class Order implements Serializable {
         this.product = product;
     }
 
-    public Order(BigDecimal orderNum, String product, Date orderDate, String mfr, BigDecimal qty, BigDecimal amount) {
+    public Order(BigDecimal orderNum, String product, LocalDate orderDate, String mfr, BigDecimal qty, BigDecimal amount) {
         this.orderNum = orderNum;
         this.product = product;
         this.orderDate = orderDate;
@@ -58,11 +60,11 @@ public class Order implements Serializable {
         this.product = product;
     }
 
-    public Date getOrderDate() {
+    public LocalDate getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(Date orderDate) {
+    public void setOrderDate(LocalDate orderDate) {
         this.orderDate = orderDate;
     }
 
@@ -73,7 +75,6 @@ public class Order implements Serializable {
     public void setMfr(String mfr) {
         this.mfr = mfr;
     }
-
 
     public BigDecimal getQty() {
         return qty;
