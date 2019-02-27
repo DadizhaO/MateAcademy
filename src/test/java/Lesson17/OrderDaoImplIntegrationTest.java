@@ -6,7 +6,6 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import java.math.BigDecimal;
-import java.sql.SQLException;
 import java.time.LocalDate;
 
 import static org.junit.Assert.assertTrue;
@@ -21,19 +20,25 @@ public class OrderDaoImplIntegrationTest {
 
 
     @Test
-    public void testInsertOrder() throws SQLException {
+    public void testInsertOrder() {
         assertTrue(orderDao.insertOrder(order));
     }
 
     @Test
-    public void testUpdateOrder() throws SQLException {
+    public void testUpdateOrder() {
         assertTrue(orderDao.updateOrder(order));
     }
 
     @Test
-    public void testDeleteOrder() throws SQLException {
-        assertTrue(orderDao.deleteOrder(order));
+    public void testDeleteOrder() {
+        assertTrue(orderDao.deleteOrder(new Order(new BigDecimal(1234))));
 
+    }
+
+    @Test
+    public void testFindOrderById() {
+        Order order = orderDao.findOrderById(new BigDecimal(112922));
+        System.out.println(order);
     }
 
 }

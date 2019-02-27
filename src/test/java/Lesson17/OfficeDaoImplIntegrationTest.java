@@ -9,7 +9,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.math.BigDecimal;
-import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -31,7 +30,7 @@ public class OfficeDaoImplIntegrationTest {
 
 
     @Test
-    public void test1InsertOffice() throws SQLException {
+    public void test1InsertOffice() {
         assertTrue(officeDao.insertOffice(office1));
         List<Office> offices = manager.createQuery("SELECT o FROM Office o", Office.class).getResultList();
         System.out.println(offices);
@@ -40,13 +39,13 @@ public class OfficeDaoImplIntegrationTest {
     }
 
     @Test
-    public void test2UpdateOffice() throws SQLException {
+    public void test2UpdateOffice() {
         assertTrue(officeDao.updateOffice(office2));
     }
 
     @Test
 
-    public void test3DeleteOffice() throws SQLException {
+    public void test3DeleteOffice() {
         assertTrue(officeDao.deleteOffice(office1));
         List<Office> offices = manager.createQuery("select o from Office o", Office.class).getResultList();
         System.out.println(offices);

@@ -24,14 +24,18 @@ public class OrderDaoImpl implements OrderDao {
         return null;
     }
 
-    @Override
-    public Set<Order> getAllOrdersInnerJoin() {
-        return null;
-    }
 
     @Override
     public Order findOrderById(BigDecimal id) {
-        return null;
+        LOG.debug("getting Orders instance with id: " + id);
+        try {
+            Order order = entityManager.find(Order.class, id);
+            LOG.debug("successful");
+            return order;
+        } catch (RuntimeException re) {
+            LOG.error("failed", re);
+            throw re;
+        }
     }
 
     @Override
