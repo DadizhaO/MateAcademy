@@ -1,12 +1,13 @@
 package Lesson17;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import lombok.ToString;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Set;
 
+@ToString(exclude = "salesreps")
 @Entity
 @Table(name = "OFFICES", schema = "MA_STUDENT")
 public class Office implements Serializable {
@@ -18,23 +19,47 @@ public class Office implements Serializable {
     private String city;
     @Column
     private String region;
-    @Column
-    private BigDecimal mgr;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MGR")
+    private Salesrep mgr;
     @Column
     private BigDecimal target;
     @Column
     private BigDecimal sales;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "repOffice")
+    private Set<Salesrep> salesreps;
+
     public Office() {
     }
 
-    public Office(BigDecimal office, String city, String region, BigDecimal mgr, BigDecimal target, BigDecimal sales) {
+    public Office(BigDecimal office, String city, String region, Salesrep mgr, BigDecimal target, BigDecimal sales) {
         this.officeId = office;
         this.city = city;
         this.region = region;
         this.mgr = mgr;
         this.target = target;
         this.sales = sales;
+    }
+
+    public Office(BigDecimal officeId, String city, String region, Salesrep mgr, BigDecimal target, BigDecimal sales, Set<Salesrep> salesreps) {
+        this.officeId = officeId;
+        this.city = city;
+        this.region = region;
+        this.mgr = mgr;
+        this.target = target;
+        this.sales = sales;
+        this.salesreps = salesreps;
+    }
+
+
+    public Set<Salesrep> getSalesreps() {
+        return salesreps;
+    }
+
+    public void setSalesreps(Set<Salesrep> salesreps) {
+        this.salesreps = salesreps;
     }
 
     public BigDecimal getOfficeId() {
@@ -61,11 +86,11 @@ public class Office implements Serializable {
         this.region = region;
     }
 
-    public BigDecimal getMgr() {
+    public Salesrep getMgr() {
         return mgr;
     }
 
-    public void setMgr(BigDecimal mgr) {
+    public void setMgr(Salesrep mgr) {
         this.mgr = mgr;
     }
 
@@ -85,15 +110,4 @@ public class Office implements Serializable {
         this.sales = sales;
     }
 
-    @Override
-    public String toString() {
-        return "Office{" +
-                "officeId=" + officeId +
-                ", city='" + city + '\'' +
-                ", region='" + region + '\'' +
-                ", mgr=" + mgr +
-                ", target=" + target +
-                ", sales=" + sales +
-                '}';
-    }
 }

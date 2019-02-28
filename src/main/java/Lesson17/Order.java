@@ -1,10 +1,14 @@
 package Lesson17;
 
+
+import lombok.ToString;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@ToString
 @Entity
 @Table(name = "ORDERS", schema = "MA_STUDENT")
 public class Order implements Serializable {
@@ -24,6 +28,12 @@ public class Order implements Serializable {
     private BigDecimal qty;
     @Column
     private BigDecimal amount;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cust")
+    private Customer cust;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rep")
+    private Salesrep rep;
 
     public Order() {
 
@@ -45,6 +55,33 @@ public class Order implements Serializable {
         this.mfr = mfr;
         this.qty = qty;
         this.amount = amount;
+    }
+
+    public Order(BigDecimal orderNum, Product product, LocalDate orderDate, String mfr, BigDecimal qty, BigDecimal amount, Customer cust, Salesrep rep) {
+        this.orderNum = orderNum;
+        this.product = product;
+        this.orderDate = orderDate;
+        this.mfr = mfr;
+        this.qty = qty;
+        this.amount = amount;
+        this.cust = cust;
+        this.rep = rep;
+    }
+
+    public Customer getCust() {
+        return cust;
+    }
+
+    public void setCust(Customer cust) {
+        this.cust = cust;
+    }
+
+    public Salesrep getRep() {
+        return rep;
+    }
+
+    public void setRep(Salesrep rep) {
+        this.rep = rep;
     }
 
     public BigDecimal getOrderNum() {
@@ -95,17 +132,6 @@ public class Order implements Serializable {
         this.amount = amount;
     }
 
-    @Override
-    public String toString() {
-        return "Order{" +
-                "orderNum=" + orderNum +
-                ", product=" + product +
-                ", orderDate=" + orderDate +
-                ", mfr='" + mfr + '\'' +
-                ", qty=" + qty +
-                ", amount=" + amount +
-                '}';
-    }
 }
 
 
