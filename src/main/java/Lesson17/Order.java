@@ -1,14 +1,11 @@
 package Lesson17;
 
 
-import lombok.ToString;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@ToString
 @Entity
 @Table(name = "ORDERS", schema = "MA_STUDENT")
 public class Order implements Serializable {
@@ -29,10 +26,10 @@ public class Order implements Serializable {
     @Column
     private BigDecimal amount;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cust")
+    @JoinColumn(name = "CUST")
     private Customer cust;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "rep")
+    @JoinColumn(name = "REP")
     private Salesrep rep;
 
     public Order() {
@@ -132,6 +129,19 @@ public class Order implements Serializable {
         this.amount = amount;
     }
 
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderNum=" + orderNum +
+                ", product=" + product.getProductId() +
+                ", orderDate=" + orderDate +
+                ", mfr='" + mfr + '\'' +
+                ", qty=" + qty +
+                ", amount=" + amount +
+                ", cust=" + cust.getCustNum() +
+                ", rep=" + rep.getEmplNum() +
+                '}';
+    }
 }
 
 

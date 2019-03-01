@@ -6,7 +6,12 @@ import org.apache.logging.log4j.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.Set;
 
 public class OrderDaoImpl implements OrderDao {
@@ -21,19 +26,32 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public Set<Order> getAllOrders() {
-        return null;
+        try {
+            CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+            CriteriaQuery<Order> cq = cb.createQuery(Order.class);
+            Root<Order> rootEntry = cq.from(Order.class);
+            CriteriaQuery<Order> all = cq.select(rootEntry);
+            TypedQuery<Order> allQuery = entityManager.createQuery(all);
+            allQuery.setFirstResult(1);
+            allQuery.setMaxResults(1);
+            return new HashSet<>(allQuery.getResultList());
+        } catch (RuntimeException re) {
+            LOG.error("getAll failed", re);
+            throw re;
+        }
+
     }
 
 
     @Override
     public Order findOrderById(BigDecimal id) {
-        LOG.debug("getting Orders instance with id: " + id);
+        //LOG.debug("getting Orders instance with id: " + id);
         try {
             Order order = entityManager.find(Order.class, id);
-            LOG.debug("successful");
+            //LOG.debug("successful");
             return order;
         } catch (RuntimeException re) {
-            LOG.error("failed", re);
+            // LOG.error("failed", re);
             throw re;
         }
     }
