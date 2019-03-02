@@ -55,7 +55,9 @@ public class OrderDaoImpl implements OrderDao {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            sessionObj.close();
+            if (sessionObj != null) {
+                sessionObj.close();
+            }
         }
         return orders;
     }
@@ -75,7 +77,9 @@ public class OrderDaoImpl implements OrderDao {
             }
             sqlException.printStackTrace();
         } finally {
-            sessionObj.close();
+            if (sessionObj != null) {
+                sessionObj.close();
+            }
         }
         return order;
     }
@@ -96,7 +100,9 @@ public class OrderDaoImpl implements OrderDao {
             }
             e.printStackTrace();
         } finally {
-            sessionObj.close();
+            if (sessionObj != null) {
+                sessionObj.close();
+            }
         }
         return result;
     }
@@ -117,7 +123,9 @@ public class OrderDaoImpl implements OrderDao {
             }
             e.printStackTrace();
         } finally {
-            sessionObj.close();
+            if (sessionObj != null) {
+                sessionObj.close();
+            }
         }
         return result;
     }
@@ -138,7 +146,9 @@ public class OrderDaoImpl implements OrderDao {
             }
             e.printStackTrace();
         } finally {
-            sessionObj.close();
+            if (sessionObj != null) {
+                sessionObj.close();
+            }
         }
         return result;
     }
