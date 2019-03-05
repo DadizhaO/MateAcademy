@@ -35,10 +35,21 @@ public class Controller {
     }
 
     @PUT
-    @Path("/{name}")
-    public Response updatePrice(@PathParam("name") int id, @QueryParam("price") double price) {
+    @Path("/{id}")
+    public Response updatePrice(@PathParam("id") int id, @QueryParam("price") double price) {
         if (productData != null) {
             productData.values().stream().filter(p -> p.getId() == id).forEach(p -> p.setPrice(price));
+
+            return Response.status(Status.OK).entity(productData).type(MediaType.APPLICATION_JSON).build();
+        }
+        return Response.status(Status.NOT_FOUND).build();
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public Response deleteById(@PathParam("id") int id) {
+        if (productData != null) {
+            productData.values().removeIf(p -> p.getId() == id);
 
             return Response.status(Status.OK).entity(productData).type(MediaType.APPLICATION_JSON).build();
         }
