@@ -19,7 +19,7 @@ public class Main {
 
         Bicycle bicycle = (Bicycle) context.getBean("bicycle2");
         bicycle.moveForward();
-        
+
         System.out.println("----");
         Truck truck = context.getBean("truck", Truck.class);
         System.out.println(truck.getSpeed());
